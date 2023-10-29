@@ -170,39 +170,41 @@ First, the total number of ticks for each wheel needs to be calculated using the
 
 
 
+
 $$
-\Delta<sub>left_count</sub> = current number of ticks - previous number of ticks of the left encoder \\
-\Delta<sub>right_count</sub> = current number of ticks - previous number of ticks of the right encoder
+\Delta_{\text{left\_count}} = \text{current number of ticks} - \text{previous number of ticks of the left encoder} \\
+\Delta_{\text{right\_count}} = \text{current number of ticks} - \text{previous number of ticks of the right encoder}
 $$
 
 Secondly, the changes of $x$, $y$, and $\theta$ can be monitored and computed using the following formulas:
 
 $$
-\Delta<sub>x</sub> = (\Delta<sub>right_count</sub> - \Delta<sub>left_count</sub>) * DISTANCE_PER_COUNT \\
-\Delta<sub>y</sub> = 0 \\
-\Delta<sub>theta</sub> = (\Delta<sub>right_count</sub> + \Delta<sub>left_count</sub>) / WHEEL_BASE
+\Delta_x = (\Delta_{\text{right\_count}} - \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \\
+\Delta_y = 0 \\
+\Delta_\theta = \frac{\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}}{\text{WHEEL\_BASE}}
 $$
 
-By calculating the difference between the left and right wheel's number of ticks, the whole number of ticks of the robot is computed, and the distance of the robot's movement is obtained by multiplying the DISTANCE_PER_COUNT parameter. By dividing by the WHEEL_BASE parameter, the angle of rotation of the robot (yaw) is calculated.
+By calculating the difference between the left and right wheel's number of ticks, the whole number of ticks of the robot is computed, and the distance of the robot's movement is obtained by multiplying the `DISTANCE_PER_COUNT` parameter. By dividing by the `WHEEL_BASE` parameter, the angle of rotation of the robot (yaw) is calculated.
 
 $$
-\Delta<sub>x</sub> = (\Delta<sub>right_count</sub> + \Delta<sub>left_count</sub>) * DISTANCE_PER_COUNT * cos(theta)
+\Delta_x = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \cdot \cos(\theta)
 $$
 
-With the summation of the number of ticks of the right and left wheels, the whole robot's movement in total is computed and converted to meters by multiplying by DISTANCE_PER_COUNT. As a result, the movement along the x-axis is calculated by multiplying the cosine of the theta angle to the whole robot's movement.
+With the summation of the number of ticks of the right and left wheels, the whole robot's movement in total is computed and converted to meters by multiplying by `DISTANCE_PER_COUNT`. As a result, the movement along the x-axis is calculated by multiplying the cosine of the $\theta$ angle to the whole robot's movement.
 
 $$
-\Delta<sub>y</sub> = (\Delta<sub>right_count</sub> + \Delta<sub>left_count</sub>) * DISTANCE_PER_COUNT * sin(theta)
+\Delta_y = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \cdot \sin(\theta)
 $$
 
 To calculate the whole movement along the y-axis, the sine is used, and the result formula is shown above.
 
-Now using the formulas above, x_<sub>abs</sub>, y_<sub>abs</sub>, and theta_<sub>abs</sub> can be defined as:
+Now using the formulas above, $x_{\text{abs}}$, $y_{\text{abs}}$, and $\theta_{\text{abs}}$ can be defined as:
 
 $$
-x_<sub>abs</sub> = x_<sub>prev</sub> + Delta_<sub>x</sub> \\
-y_<sub>abs</sub> = y_<sub>prev</sub> + Delta_<sub>y</sub>
+x_{\text{abs}} = x_{\text{prev}} + \Delta_x \\
+y_{\text{abs}} = y_{\text{prev}} + \Delta_y
 $$
+
 
 
 ## Exercise 7: Visual SLAM
