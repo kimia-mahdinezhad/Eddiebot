@@ -18,6 +18,7 @@ Make sure you set the following `cmake` flags along with the other flags that yo
 After setting up the proper networking, try teleoperating Eddie using the two laptops. Bring up rviz on the remote laptop, try displaying the RGB image of the kinect.
 
 **Answer**
+
 We bring up depth image and RGB image data of `Microsoft Kinect xbox-360` using `Kinect_ros2` package with IPC support, based on Libfreenect. Libfreenect is a user-space driver for Microsoft Kinect. Using `freenect-glview` command, RGB/depth image can be seen.
 We also use the `Kinect_ros2` executable node to publish the require data for other packages, the node has been spun in nav package of eddiebot, it can also execute and spin manually using `ros2 run kinect_ros2 kinect_ros2_node` command.
 Here’s the output of RGB and depth image of Microsoft Kinect in rviz:
@@ -27,6 +28,7 @@ Here’s the output of RGB and depth image of Microsoft Kinect in rviz:
 While kinect_ros2_node is running, open rqt and go to the topic monitor. Check the timestamps for image_raw and depth/image_raw topics. Do both of them have valid timestamps? Browse through the code of kinect_ros2 and find the place where it assigns a timestamp to depth images. Make sure that RGB images also get a timestamp. Open rqt and check to see if your changes have worked!
 
 **Answer**
+
 As shown below, when using rqt and listening to the related topics, the `/image_raw` does not have a valid timestamp.
 ![](https://i.ibb.co/XJKQJxf/3-2.png)
 The timestamp of `/depth/image_raw` has been set in `Kinect_ros2_component.cpp` code, the missing timestamp of `/image_raw` has been added similarly to the available timestamp. As shown below the rgb_info topic header.stamp also has been set to the timestamp (it was needed for rtabmap Kinect in exercise 7).
@@ -65,6 +67,7 @@ Try to move around infront of the kinect and experiment with the cloud.
 Make sure you read all the launch files carefully. Questions will be asked regarding them during the interview.
 
 **Answer**
+
 `eddiebot_bringup` package launch file `eddie.launch.yaml` spin four distinct nodes for bringing up different data of robot to ros2. The nodes are:
 ```
 1. eddie -> for connecting to eddie board
@@ -99,6 +102,7 @@ One laptop is going to stay on Eddie and the other laptop is going to do teleope
 After setting up the proper networking, try teleoperating Eddie using the two laptops. Bring up rviz on the remote laptop, try displaying the RGB image of the kinect.
 
 **Answer**
+
 If `ROS_DOMAIN_ID` has not been set, default value is equal to 0, ros2 machines on the same network can communicate via different `ROS_DOMAIN_ID`’s (up-to 128).
 In our case by using the `ros2 run teleop_twist_keyboard teleop_twist_keyboard` command eddiebot velocity controller related topics can be controlled by another ros2 machine.
 
@@ -117,6 +121,7 @@ The most important task in this section is tuning the parameters for slam_toolbo
 * Make sure you record the parts of the session using a camera (your phone, for example). Both of the group members must be in the video.
 
 **Answer**
+
 By bringing up the `rgbd-image` of Microsoft Kinect data and convert it to fake laser scan data, slam can be done using slam_toolbox package.
 After bringing up the required nodes for eddiebot (more explanation provided in previous exercises), robot odometry data calculated and published by eddiebot_nav package which also explained previously. 
 using this data and the fake laser scanner, slam_toolbox package can do the localization and mapping simultaneously for eddie robot.
@@ -146,6 +151,7 @@ Try to improve the odometry calculation from wheel encoders, current heading, an
 Explain how your changes have improved the overall performance.
 
 **Answer**
+
 Eddiebot uses the `edditbot_odom` package to compute its odometry and publish it to the "odom" topic. Commonly, odometry is calculated using wheel encoders, IMU, etc. In our case, with the lack of viable sensors, the package only uses wheel encoders data through subscribing to the "eddie/encoders_data" topic, which is provided by the `eddiebot_bringup` package.
 
 The `Eddiebot_nav` package is used for navigation by creating multiple nodes such as `eddiebot_odom`. It executes the `eddie_odom` executable node from the `eddiebot_odom` package for further computation.
@@ -195,6 +201,7 @@ You can take a look at [this](https://introlab.3it.usherbrooke.ca/mediawiki-intr
 * Do the same tasks as in exercise 4. Perform SLAM and do navigation this time using rtabmap. (the maps don't need to be the same place)
 
 **Answer**
+
 Other methods to perform SLAM (Simultaneous Localization and Mapping) for mobile robots involve using visual SLAM, which relies on data from the robot's camera, including depth images, RGB images, and more. There are multiple packages available to achieve visual SLAM, each with different approaches to feature detection, point clouds in 3D, 2D grid mapping, and so on.
 
 In our case, we utilize the `rtabmap` package, which offers various ways to perform SLAM. The chosen approach is similar to Exercise 5, involving the conversion of the RGB-D image from the Microsoft Kinect sensor to a simulated laser scan and using odometry data (specifically, wheel encoders in our case) to achieve SLAM. This is achieved through the `rtabmap.launch.py` launch file, which launches several other launch files:
