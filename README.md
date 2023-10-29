@@ -179,21 +179,25 @@ $$
 Secondly, the changes of $x$, $y$, and $\theta$ can be monitored and computed using the following formulas:
 
 $$
-\Delta_x = (\Delta_{\text{right\_count}} - \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \\
-\Delta_y = 0 \\
+\Delta_x = (\Delta_{\text{right\_count}} - \Delta_{\text{left\_count}}) . \text{DISTANCE\_PER\_COUNT}
+$$
+$$
+\Delta_y = 0
+$$
+$$
 \Delta_\theta = \frac{\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}}{\text{WHEEL\_BASE}}
 $$
 
 By calculating the difference between the left and right wheel's number of ticks, the whole number of ticks of the robot is computed, and the distance of the robot's movement is obtained by multiplying the `DISTANCE_PER_COUNT` parameter. By dividing by the `WHEEL_BASE` parameter, the angle of rotation of the robot (yaw) is calculated.
 
 $$
-\Delta_x = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \cdot \cos(\theta)
+\Delta_x = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) . \text{DISTANCE\_PER\_COUNT} . \cos(\theta)
 $$
 
 With the summation of the number of ticks of the right and left wheels, the whole robot's movement in total is computed and converted to meters by multiplying by `DISTANCE_PER_COUNT`. As a result, the movement along the x-axis is calculated by multiplying the cosine of the $\theta$ angle to the whole robot's movement.
 
 $$
-\Delta_y = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) \cdot \text{DISTANCE\_PER\_COUNT} \cdot \sin(\theta)
+\Delta_y = (\Delta_{\text{right\_count}} + \Delta_{\text{left\_count}}) . \text{DISTANCE\_PER\_COUNT} . \sin(\theta)
 $$
 
 To calculate the whole movement along the y-axis, the sine is used, and the result formula is shown above.
@@ -201,7 +205,9 @@ To calculate the whole movement along the y-axis, the sine is used, and the resu
 Now using the formulas above, $x_{\text{abs}}$, $y_{\text{abs}}$, and $\theta_{\text{abs}}$ can be defined as:
 
 $$
-x_{\text{abs}} = x_{\text{prev}} + \Delta_x \\
+x_{\text{abs}} = x_{\text{prev}} + \Delta_x
+$$
+$$
 y_{\text{abs}} = y_{\text{prev}} + \Delta_y
 $$
 
