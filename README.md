@@ -22,7 +22,7 @@ After setting up the proper networking, try teleoperating Eddie using the two la
 We bring up depth image and RGB image data of `Microsoft Kinect xbox-360` using `Kinect_ros2` package with IPC support, based on Libfreenect. Libfreenect is a user-space driver for Microsoft Kinect. Using `freenect-glview` command, RGB/depth image can be seen.
 We also use the `Kinect_ros2` executable node to publish the require data for other packages, the node has been spun in nav package of eddiebot, it can also execute and spin manually using `ros2 run kinect_ros2 kinect_ros2_node` command.
 Here’s the output of RGB and depth image of Microsoft Kinect in rviz:
-![](https://i.ibb.co/rMcZshH/3-1.png)
+![](https://github.com/kimia-mahdinezhad/Eddiebot/blob/main/Media/3-1.png)
 
 ## Exercise 2: Add timestamp to RGB images
 While kinect_ros2_node is running, open rqt and go to the topic monitor. Check the timestamps for image_raw and depth/image_raw topics. Do both of them have valid timestamps? Browse through the code of kinect_ros2 and find the place where it assigns a timestamp to depth images. Make sure that RGB images also get a timestamp. Open rqt and check to see if your changes have worked!
@@ -30,11 +30,11 @@ While kinect_ros2_node is running, open rqt and go to the topic monitor. Check t
 **Answer**
 
 As shown below, when using rqt and listening to the related topics, the `/image_raw` does not have a valid timestamp.
-![](https://i.ibb.co/XJKQJxf/3-2.png)
+![](https://github.com/kimia-mahdinezhad/Eddiebot/blob/main/Media/3-2.png)
 The timestamp of `/depth/image_raw` has been set in `Kinect_ros2_component.cpp` code, the missing timestamp of `/image_raw` has been added similarly to the available timestamp. As shown below the rgb_info topic header.stamp also has been set to the timestamp (it was needed for rtabmap Kinect in exercise 7).
-![](https://i.ibb.co/6DyrFbv/3-3.png)
+![](https://github.com/kimia-mahdinezhad/Eddiebot/blob/main/Media/3-3.png)
 The result of the changes of the code can be seen below that the `/image_raw` topic has a timestamp in its header part.
-![](https://i.ibb.co/Zf70qnP/3-4.png)
+![](https://github.com/kimia-mahdinezhad/Eddiebot/blob/main/Media/3-4.png)
 
 
 ## Exercise 3: bringup the Robot
